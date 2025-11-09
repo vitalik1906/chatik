@@ -1,0 +1,264 @@
+<!-- <!DOCTYPE html>
+<html lang="uk">
+<head>
+
+    <style>
+    .message {
+        max-width: 60%;
+        padding: 8px 12px;
+        border-radius: 10px;
+        margin-bottom: 8px;
+        display: inline-block;
+        background: #f2f2f2;
+
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+    </style>
+  
+</div>
+    <meta charset="UTF-8">
+    <title>Чати</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .users {
+            width: 250px;
+            background: #fff;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+            overflow-y: auto;
+        }
+        .users ul {
+            list-style: none;
+            padding: 0;
+        }
+        .users li {
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+        }
+        .chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        .message {
+            margin-bottom: 8px; 
+            width: 50vw;
+        }
+        .message p{
+            width: 50%   ;
+        }
+        .message.me {
+            font-weight: bold;
+            color: green;
+        }
+        form {
+            display: flex;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="users">
+        <h2>Привіт, {{ username }}! 👋</h2>
+        <h3>Усі користувачі сайту:</h3>
+        <ul>
+            {% for user in users %}
+                <li>{{ user }}</li>
+            {% else %}
+                <li>Немає інших користувачів 😅</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('logout') }}">Вийти</a>
+    </div>
+
+    <div class="chat">
+        <h3>Загальний чат</h3>
+        <div class="messages">
+            {% for msg in messages %}
+                <div class="message {% if msg.sender == username %}me{% endif %}">
+                    <strong>{{ msg.sender }}:</strong><p> {{ msg.meseg }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <form method="POST">
+            <input type="text" name="content" placeholder="Написати повідомлення..." required>
+            <button type="submit">Відправити</button>
+        </form>
+    </div>
+
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+
+<meta charset="UTF-8">
+<title>Чати</title>
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f0f2f5;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .users {
+        width: 250px;
+        background: #fff;
+        padding: 20px;
+        border-right: 1px solid #ccc;
+        overflow-y: auto;
+    }
+
+    .users ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .users li {
+        background: #f9f9f9;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+    }
+
+    .chat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .messages {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* ✅ Стиль для повідомлень з лімітом 50 символів */
+    .message {
+        padding: 8px 12px;
+        border-radius: 10px;
+        background: #f2f2f2;
+        border: #45a049 2px solid; /*jjj*/
+
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        word-break: break-word;
+
+        display: inline-block;
+        max-width: 50ch; /* ✅ максимум ~50 символів */
+    }
+
+    .message.me {
+        background: #c7ffc4;
+        margin-left: auto;
+    }
+
+    /* ✅ Стиль для інпуту з тим самим обмеженням */
+    input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px 0 0 5px;
+        border: 1px solid #ccc;
+        outline: none;
+
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        max-width: 50ch;
+    }
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        background: #4CAF50;
+        color: white;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #45a049;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="users">
+    <h2>Привіт, {{ username }}! 👋</h2>
+    <h3>Усі користувачі сайту:</h3>
+    <ul>
+        {% for user in users %}
+            <li>{{ user }}</li>
+        {% else %}
+            <li>Немає інших користувачів 😅</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('logout') }}">Вийти</a>
+</div>
+
+<div class="chat">
+    <h3>Загальний чат</h3>
+
+    <div class="messages">
+        {% for msg in messages %}
+            <div class="message {% if msg.sender == username %}me{% endif %}">
+                <strong>{{ msg.sender }}:</strong> {{ msg.meseg }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <form method="POST">
+        <input type="text" name="content" placeholder="Написати повідомлення..." required>
+        <button type="submit">Відправити</button>
+    </form>
+</div>
+
+</body>
+</html>

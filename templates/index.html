@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% if username %}
+        <h1>Вітаю, {{ username }}! 🎉</h1>
+        <a href="{{ url_for('logout') }}">Вийти</a>
+    {% else %}
+        <h1>Привіт, гість!</h1>
+        <a href="{{ url_for('register') }}">Зареєструватися</a> |
+        <a href="{{ url_for('login') }}">Увійти</a>
+    {% endif %}
+</body>
+</html>
